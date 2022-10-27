@@ -1,19 +1,14 @@
 import { createGlobalStyle } from 'styled-components';
 
 const GlobalStyle = createGlobalStyle`
-  // ::: 웹폰트 적용
-  @font-face {
-    font-family: 'Pretendard-Regular';
-    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
-    font-style: normal;
-    font-display: swap;
-}
-  
+
   :root {
     --textBlack-color: #000000;
     --textGray-color: #666666;
     --gray-color: #959595;
     --lightGray-color: #E0E0E0;
+    --buttonLine-color: #cccccc;
+    --font-style: 'Noto Sans KR', sans-serif;
   }
 
   body {
@@ -42,9 +37,6 @@ const GlobalStyle = createGlobalStyle`
   button {
     transition: all 0.3s ease;
    
-  }
-  button:hover {
-    box-shadow: var(--button-shadow);
   }
   textarea {
     resize: none;

@@ -1,19 +1,34 @@
 import React from 'react';
 import styled from 'styled-components';
+import RightMenu from './RightMenu';
 import ProductList from '../static/product/id/413.json';
 
 const DetailContainer = () => {
-  const productImages = ProductList.images;
-  console.log(productImages);
+  const productList = ProductList;
+  console.log(productList);
   return (
     <StDetailContailner>
       <StThumbBox>
-        {productImages.map((img) => (
+        {productList.images.map((img) => (
           <StThumb>
             <img src={img} alt="상품이미지" />
           </StThumb>
         ))}
       </StThumbBox>
+      <RightMenu
+        productId={productList.id}
+        productBrandIcon={productList.brandIcon}
+        productBrandName={productList.brandName}
+        releaseSiteCount={productList.releaseSiteCount}
+        productName={productList.name}
+        productNameEn={productList.nameEn}
+        firstReleaseDate={productList.firstReleaseDate}
+        productCode={productList.code}
+        productPrice={productList.price}
+        productComment={productList.comment}
+        productViews={productList.views}
+        productApplyCount={productList.applyCount}
+      />
     </StDetailContailner>
   );
 };
@@ -21,14 +36,16 @@ const DetailContainer = () => {
 export default DetailContainer;
 
 const StDetailContailner = styled.div`
+  display: flex;
+  justify-content: space-between;
   width: 100%;
-  background-color: blue;
+  padding: 0 40px;
 `;
 
 const StThumbBox = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  width: 1220px;
+  gap: 20px;
 `;
 const StThumb = styled.div`
   width: 600px;
