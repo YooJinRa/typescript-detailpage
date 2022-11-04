@@ -26,16 +26,16 @@ const GlobalModal = ({ onClose, children }: ModalProps) => {
 export default GlobalModal;
 
 const Background = styled.div`
-  height: 100%;
-  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
   position: fixed;
+  height: 100vh;
+  width: 100%;
   left: 0;
   top: 0;
   text-align: center;
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: rgba(0, 0, 0, 0.4);
   z-index: 5;
 `;
 

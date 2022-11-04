@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 
 import RightMenuRelease from './RightMenuRelease';
+import CopyIcon from '../static/images/copy.svg';
+import SpeechBalloonIcon from '../static/images/speechBalloon.svg';
 
 interface Props {
   productId: number;
@@ -33,9 +35,24 @@ const RightMenu = ({
   productApplyCount,
 }: Props) => {
   const [isMore, setIsMore] = useState<boolean>(false);
+  const [isCopy, setIsCopy] = useState<boolean>(false);
+
+  const onCopyProductCode = async (productCode: string) => {
+    try {
+      await navigator.clipboard.writeText(productCode);
+
+      setIsCopy(true);
+      setTimeout(() => {
+        setIsCopy(false);
+      }, 2000);
+    } catch (error) {
+      console.log('복사 실패!');
+    }
+  };
+
   return (
     <StRightMenuContainer>
-      <StRightMenuRow className="brandTitleRow" isMore={isMore}>
+      <StRightMenuRow className="brandTitleRow" isMore={isMore} isCopy={isCopy}>
         <div className="brandName">
           <h3>{productBrandName}</h3>
           <h3>{productNameEn}</h3>
@@ -45,10 +62,19 @@ const RightMenu = ({
           <img src={productBrandIcon} alt="brand images" />
         </p>
       </StRightMenuRow>
-      <StRightMenuRow className="directionRow" isMore={isMore}>
+      <StRightMenuRow className="directionRow" isMore={isMore} isCopy={isCopy}>
         <ul>
           <li className="detailTitle">제품 코드</li>
-          <li className="detailText">{productCode}</li>
+          <li className="detailText">
+            {productCode}{' '}
+            <strong
+              onClick={() => {
+                onCopyProductCode(productCode);
+              }}
+            >
+              <span>복사 성공</span>
+            </strong>
+          </li>
         </ul>
         <ul>
           <li className="detailTitle">가격</li>
@@ -63,7 +89,7 @@ const RightMenu = ({
           <li className="detailText">{productApplyCount}</li>
         </ul>
       </StRightMenuRow>
-      <StRightMenuRow isMore={isMore}>
+      <StRightMenuRow isMore={isMore} isCopy={isCopy}>
         <p className="brandInfoText">
           <span>{productComment}</span>
           <strong onClick={() => setIsMore(!isMore)}>
@@ -84,11 +110,13 @@ const RightMenu = ({
 export default RightMenu;
 
 const StRightMenuContainer = styled.div`
-  width: 400px;
+  width: 440px;
   height: 200px;
+  padding: 20px;
+  margin-top: 140px;
 `;
 
-const StRightMenuRow = styled.div<{ isMore: boolean }>`
+const StRightMenuRow = styled.div<{ isMore: boolean; isCopy: boolean }>`
   display: flex;
   justify-content: space-between;
   width: 100%;
@@ -136,6 +164,35 @@ const StRightMenuRow = styled.div<{ isMore: boolean }>`
 
       &.detailTitle {
         color: var(--textGray-color);
+      }
+      &.detailText {
+        strong {
+          position: relative;
+          display: inline-block;
+          width: 16px;
+          height: 16px;
+          background-image: url(${CopyIcon});
+          background-repeat: no-repeat;
+          background-position: center;
+          background-size: contain;
+          cursor: pointer;
+
+          span {
+            position: absolute;
+            top: -40px;
+            left: 50%;
+            display: ${(props) => (props.isCopy ? 'block' : 'none')};
+            width: 76px;
+            height: 38px;
+            color: #666666;
+            text-align: center;
+            background-image: url(${SpeechBalloonIcon});
+            background-repeat: no-repeat;
+            background-position: center;
+            margin-left: -36px;
+            padding-top: 7px;
+          }
+        }
       }
     }
   }
