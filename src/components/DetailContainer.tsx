@@ -9,8 +9,8 @@ const DetailContainer = () => {
   return (
     <StDetailContailner>
       <StThumbBox>
-        {productList.images.map((img) => (
-          <StThumb>
+        {productList.images.map((img, index) => (
+          <StThumb key={img + index}>
             <img src={img} alt="상품이미지" />
           </StThumb>
         ))}

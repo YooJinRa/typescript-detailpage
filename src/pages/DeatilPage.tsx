@@ -12,6 +12,7 @@ const DetailPage = () => {
       <GlobalLayout>
         <DetailContainer />
       </GlobalLayout>
+      <div id="modal-root"></div>
     </StDetailPageContailner>
   );
 };

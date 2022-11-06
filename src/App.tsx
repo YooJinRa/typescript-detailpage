@@ -2,7 +2,11 @@ import React from 'react';
 import DetailPage from './pages/DeatilPage';
 
 function App() {
-  return <DetailPage />;
+  return (
+    <>
+      <DetailPage />
+    </>
+  );
 }
 
 export default App;

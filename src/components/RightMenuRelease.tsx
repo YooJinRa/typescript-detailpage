@@ -1,54 +1,19 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
-import GlobalPotal from './global/GlobalPotal';
 import GlobalModal from './global/GlobalModal';
 import ReleaseModalContent from './ReleaseModalContent';
 
 import ReleaseList from '../static/releases/413.json';
-import ReleaseDetail from '../static/product_release/releaseDetail.json';
 
 const RightMenuRelease = () => {
   const [ingState, setIngState] = useState<boolean>(true);
   const [modalOn, setModalOn] = useState<boolean>(false);
-  const [targetDetail, setTargetDetail] = useState<{
-    uuid: string;
-    type: number;
-    method: string;
-    url: string;
-    price?: string;
-    releaseMarket: {
-      name: string;
-      icon: string;
-      channels: {
-        type: string;
-        link: string;
-        typeName: string;
-      }[];
-    };
-    closedTimestamp: number;
-    product: {
-      brandName: string;
-      code: string;
-      name: string;
-      thumb: string;
-    };
-    shippingMethod: string;
-    payMethod: string;
-    mission?: string;
-  }>();
-
+  const [targetId, setTargetId] = useState<string>('');
   const closeModal = () => {
     setModalOn(!modalOn);
   };
-
-  const handleReleaseModal = (uuid: string) => {
-    const targetData = ReleaseDetail.filter((detail) => detail.uuid === uuid);
-    setTargetDetail(targetData);
-    setModalOn(!modalOn);
-  };
   const ReleaseItems = ReleaseList;
-  console.log(ReleaseItems);
 
   return (
     <>
@@ -73,21 +38,23 @@ const RightMenuRelease = () => {
                 <span>{item.region}</span>
                 <span>{item.shippingMethod}</span>
               </p>
-              <button onClick={() => handleReleaseModal(item.uuid)}>
+              <button
+                onClick={() => {
+                  setModalOn(true);
+                  setTargetId(item.uuid);
+                }}
+              >
                 {item.type === 0 ? '선착순' : '응모'}
               </button>
             </li>
           </ul>
-
-          <GlobalPotal>
-            {modalOn && (
-              <GlobalModal onClose={closeModal}>
-                <ReleaseModalContent targetDetail={targetDetail} />
-              </GlobalModal>
-            )}
-          </GlobalPotal>
         </StReleaseCard>
       ))}
+      {modalOn ? (
+        <GlobalModal onClose={closeModal}>
+          <ReleaseModalContent uuid={targetId} />
+        </GlobalModal>
+      ) : null}
 
       {ReleaseItems.length > 10 && <StButtonMore>더 보기</StButtonMore>}
     </>

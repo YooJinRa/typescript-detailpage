@@ -5,7 +5,7 @@ interface PotalProps {
 }
 
 const GlobalPotal = ({ children }: PotalProps) => {
-  const element = document.getElementById('modal');
+  const element = document.getElementById('modal-root');
 
   return reactDom.createPortal(children, element as HTMLElement);
 };
